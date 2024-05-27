@@ -19,6 +19,7 @@ import { useState } from "react";
 import { addToCart } from "../redux/slices/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import Meta from "../components/Meta";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -52,7 +53,7 @@ const ProductScreen = () => {
       setRating(0);
       setComment("");
     } catch (error) {
-      toast.error(error?.data?.message || error?.error)
+      toast.error(error?.data?.message || error?.error);
     }
   };
   return (
@@ -68,6 +69,7 @@ const ProductScreen = () => {
         </Message>
       ) : (
         <>
+          <Meta title={product.name} />
           <Row>
             <Col md={5}>
               <Image src={product.image} alt={product.name} fluid />
@@ -150,7 +152,7 @@ const ProductScreen = () => {
               </Card>
             </Col>
           </Row>
-          <Row className="review">
+          <Row className="review" style={{ marginTop: "20px" }}>
             <Col md={6}>
               <h2>Reviews</h2>
               {product.reviews.length === 0 && <Message>No Reviews</Message>}
