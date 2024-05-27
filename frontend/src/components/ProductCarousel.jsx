@@ -9,7 +9,8 @@ export default function ProductCarousel() {
   const { data: products, isLoading, error } = useGetTopProductsQuery();
 
   return isLoading ? (
-    <Loader />
+    // <Loader /> 
+    ""
   ) : error ? (
     <Message variant="danger">{error}</Message>
   ) : (
