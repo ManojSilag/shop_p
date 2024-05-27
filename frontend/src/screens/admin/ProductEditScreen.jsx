@@ -7,6 +7,7 @@ import FormContainer from "../../components/FormContainer";
 import {
   useUpdateProductMutation,
   useGetProductDetailsQuery,
+  useUploadProductImageMutation,
 } from "../../redux/slices/productApiSlice";
 import { toast } from "react-toastify";
 
@@ -26,7 +27,9 @@ function ProductEditScreen() {
     refetch,
     error,
   } = useGetProductDetailsQuery(productId);
-  console.log("🚀 ~ ProductEditScreen ~ product:", product);
+
+  const [uploadProductImage, { isLoading: loadingUplaod }] =
+  useUploadProductImageMutation();
 
   const [updateProduct, { isLoading: loadingUpdate }] =
     useUpdateProductMutation();
@@ -64,6 +67,19 @@ function ProductEditScreen() {
       navigate("/admin/productlist");
     }
   };
+
+  const uploadFileHandler = async (e) => {
+    const formData = new FormData();
+    formData.append("image", e.target.files[0]);
+    try {
+      const res = await uploadProductImage(formData).unwrap();
+      toast.success(res.message);
+      setImage(res.image);
+    } catch (error) {
+      toast.error(error?.data?.message || error?.error);
+    }
+  };
+
   return (
     <>
       <Link to={`/admin/productlist`} className="btn btn-light my-3">
@@ -97,6 +113,21 @@ function ProductEditScreen() {
                 placeholder="Enter Price"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="price" className="my-2">
+              <Form.Label>Image</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter Image url"
+                value={image}
+                onChange={(e) => setImage(e.target.value)}
+              ></Form.Control>
+              <Form.Control
+                type="file"
+                label="choose file"
+                onChange={uploadFileHandler}
               ></Form.Control>
             </Form.Group>
 

@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import {
   useGetProductsQuery,
   useCreateProductMutation,
+  useDeleteProductMutation,
 } from "../../redux/slices/productApiSlice";
 
 export default function ProductListScreen() {
@@ -15,7 +16,20 @@ export default function ProductListScreen() {
 
   const [createProduct, { isLoading: loadingCreate }] =
     useCreateProductMutation();
-  const deleteHandler = () => {};
+
+  const [deleteProduct, { isLoading: loadingDelete }] =
+    useDeleteProductMutation();
+  const deleteHandler = async (id) => {
+    if (window.confirm("Are you sure?")) {
+      try {
+        await deleteProduct(id);
+        toast.success("Product deleted");
+        refetch();
+      } catch (error) {
+        toast.error(error?.data?.message || error?.error);
+      }
+    }
+  };
 
   const createProductHandler = async () => {
     if (window.confirm("Are you sure want to create a new product?")) {
@@ -41,7 +55,7 @@ export default function ProductListScreen() {
       </Row>
 
       {loadingCreate && <Loader />}
-
+      {loadingDelete && <Loader />}
       {isLoading ? (
         <Loader />
       ) : error ? (
