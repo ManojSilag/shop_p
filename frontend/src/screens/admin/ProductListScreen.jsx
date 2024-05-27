@@ -64,7 +64,7 @@ export default function ProductListScreen() {
         <Loader />
       ) : error ? (
         <Message variant={"danger"}>
-          {error.data.Message || error.error}
+          {error?.data?.message || error?.error}
         </Message>
       ) : (
         <>

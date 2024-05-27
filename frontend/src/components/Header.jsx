@@ -9,6 +9,7 @@ import { useLogoutMutation } from "../redux/slices/userApiSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import SearchBox from "./SearchBox";
+import { resetCart } from "../redux/slices/cartSlice"
 function Header() {
   const { cartItems } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
@@ -22,6 +23,7 @@ function Header() {
     try {
       await logout().unwrap();
       dispatch(logOut());
+      dispatch(resetCart());
       navigate("/login");
     } catch (err) {
       toast.error(err?.data?.message || err?.err);

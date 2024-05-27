@@ -68,7 +68,7 @@ export default function OrderScreen() {
       detailes: {
         payer: {},
       },
-    });
+    }).unwrap();
     refetch();
     toast.success("Payment successful");
   };
@@ -90,7 +90,7 @@ export default function OrderScreen() {
   const onApprove = (data, actions) => {
     return actions.order.capture().then(async function (detailes) {
       try {
-        await payOrder({ orderId, detailes });
+        await payOrder({ orderId, detailes }).unwrap();
         refetch();
         toast.success("Payment successful");
       } catch (error) {
@@ -115,7 +115,7 @@ export default function OrderScreen() {
   return isLoading ? (
     <Loader />
   ) : error ? (
-    <Message variant={"danger"}>qa</Message>
+    <Message variant={"danger"}>{error?.data?.message || error?.error}</Message>
   ) : (
     <>
       <h1>Order {order?._id}</h1>
