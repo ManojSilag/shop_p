@@ -22,7 +22,7 @@ function SearchBox() {
         type="text"
         name="q"
         onChange={(e) => setKeyword(e.target.value)}
-        valur={keyword}
+        value={keyword}
         placeholder="Search Products..."
         className="mr-sm-2 ml-sm-5"
       ></Form.Control>
