@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { useProfileMutation } from "../redux/slices/userApiSlice";
 import { useGetMyOrdersQuery } from "../redux/slices/orderApiSlice";
 import { setCredentials } from "../redux/slices/authSlice";
-import { Fa, FaTimes } from "react-icons/fa";
+import { FaTimes } from "react-icons/fa";
 export default function ProfileScreen() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
