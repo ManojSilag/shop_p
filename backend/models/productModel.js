@@ -14,7 +14,7 @@ const reviewSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    users: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",

@@ -3,9 +3,11 @@ import Product from "../components/Product";
 import { useGetProductsQuery } from "../redux/slices/productApiSlice";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
-
+import { useParams } from "react-router-dom";
+import Paginate from "../components/Paginate";
 function HomeScreen() {
-  const { data: products, isLoading, error } = useGetProductsQuery();
+  const { pageNumber } = useParams();
+  const { data, isLoading, error } = useGetProductsQuery({ pageNumber });
 
   return (
     <>
@@ -19,7 +21,7 @@ function HomeScreen() {
         <>
           <h1>Latest Products</h1>
           <Row>
-            {products.map((product) => {
+            {data.products.map((product) => {
               return (
                 <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
                   <Product product={product} />
@@ -27,6 +29,7 @@ function HomeScreen() {
               );
             })}
           </Row>
+          <Paginate page={data.page} pages={data.pages} />
         </>
       )}
     </>
